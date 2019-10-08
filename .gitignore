@@ -1,2 +1,4 @@
 
 api.sh
+.DS_Store
+*.pyc

@@ -1,0 +1,4 @@
+flask
+youtube-data-api
+textblob
+gunicorn

@@ -1,1 +1,1 @@
-web: gunicorn youtube_analytics:app
+web: gunicorn youtube_analytics:youtube_analytics

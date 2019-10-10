@@ -15,6 +15,22 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+@app.route("/search_api", methods=["POST"])
+def search_api():
+    if request.content_type != 'application/json':
+        return "ERROR: expects a json file"
+    post_data = request.get_json()
+    video_id = post_data.get('video_id')
+
+    comment_list = yt.get_video_comments(video_id)
+    t = []
+    for comment in comment_list:
+        polarity = TextBlob(comment['text']).sentiment.polarity
+        subjectivity = TextBlob(comment['text']).sentiment.subjectivity
+        t.append([comment['text'],polarity,subjectivity])
+    stats = generate_stats(t)
+    return stats
+
 @app.route("/search", methods=["POST"])
 def search():
     video_id = request.form.get("search_query")

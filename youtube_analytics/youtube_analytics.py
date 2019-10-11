@@ -20,14 +20,10 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 def index():
     return render_template('index.html')
 
-@app.route("/search_api", methods=["POST"])
+@app.route("/search_api", methods=["GET"])
 @cross_origin()
 def search_api():
-    if request.content_type != 'application/json':
-        return "ERROR: expects a json file"
-    post_data = request.get_json()
-    video_id = post_data.get('video_id')
-
+    video_id = request.args.get("videoId")
     comment_list = yt.get_video_comments(video_id)
     t = []
     for comment in comment_list:

@@ -2,3 +2,4 @@ flask
 youtube-data-api
 textblob
 gunicorn
+flask-cors

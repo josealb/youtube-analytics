@@ -2,6 +2,8 @@ import datetime
 import os
 
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS, cross_origin
+
 from textblob import TextBlob
 from youtube_api import YouTubeDataAPI
 
@@ -9,13 +11,17 @@ api_key =  os.environ['YOUTUBE_API_KEY']
 
 yt = YouTubeDataAPI(api_key)
 
+
 app = Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route("/")
 def index():
     return render_template('index.html')
 
 @app.route("/search_api", methods=["POST"])
+@cross_origin()
 def search_api():
     if request.content_type != 'application/json':
         return "ERROR: expects a json file"
